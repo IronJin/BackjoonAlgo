@@ -1,69 +1,63 @@
-import java.io.*;
 import java.util.*;
-
-//lower bound 를 이용 -> right 를 끌어내림
+import java.io.*;
 
 public class Main {
+	
+	public static String solution(int a[], int b[]) {
+		
+		StringBuilder sb = new StringBuilder();
+		
+		Arrays.sort(a);
+		
+		for(int i = 0 ; i < b.length ; i++) {
+			
+			int answer = 0;
+			
+			int x = b[i];
+			
+			int left = 0;
+			int right = a.length;
+			while(left < right) {
+				int mid = (left + right)/2;
+				if(a[mid] < x) {
+					left = mid + 1;
+				}else {
+					right = mid;
+				}
+			}
+			
+			if(right < a.length) {
+				if(a[right] == x) {
+					answer = 1;
+				}
+			}
+			sb.append(answer).append("\n");
+		}
+		
+		return sb.toString();
+	}
+	
 
-	static int n;
-	static int arr1[];
-	static int m;
-	static int arr2[];
 	
 	public static void main(String[] args) throws IOException {
 		
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		StringTokenizer st;
 		
-		n = Integer.parseInt(br.readLine());
-		arr1 = new int[n];
-		st = new StringTokenizer(br.readLine());
+		int n = Integer.parseInt(br.readLine());
+		StringTokenizer st = new StringTokenizer(br.readLine());
+		int a[] = new int[n];
 		for(int i = 0 ; i < n ; i++) {
-			arr1[i] = Integer.parseInt(st.nextToken());
+			a[i] = Integer.parseInt(st.nextToken());
 		}
-		m = Integer.parseInt(br.readLine());
-		arr2 = new int[m];
+		
+		int m = Integer.parseInt(br.readLine());
+		int b[] = new int[m];
 		st = new StringTokenizer(br.readLine());
-		for(int i = 0 ; i < m ; i++) {
-			arr2[i] = Integer.parseInt(st.nextToken());
+		for(int j = 0 ; j < m ; j++) {
+			b[j] = Integer.parseInt(st.nextToken());
 		}
 		
-		pro();
-	}
-	
-	static void pro() {
-		
-		Arrays.sort(arr1);
-		
-		for(int i = 0 ; i < m ; i++) {
-			int answer = 0;
-			int index = bin(arr2[i]);
-			if(0 <= index && index < n) {
-				if(arr1[index] == arr2[i]) {
-					answer = 1;
-				}
-			}
-			
-			System.out.println(answer);
-		}
-
-		
-	}
-	
-	static int bin(int x) {
-		
-		int left = 0;
-		int right = n;
-		while(left < right) {
-			int mid = (left+right)/2;
-			if(arr1[mid] < x) {
-				left = mid + 1;
-			}else {
-				right = mid;
-			}
-		}
-		
-		return right;
+		System.out.println(solution(a,b));
 		
 	}
 
